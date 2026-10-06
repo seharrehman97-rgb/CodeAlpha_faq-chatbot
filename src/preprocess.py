@@ -16,7 +16,9 @@ nlp = spacy.load("en_core_web_sm", disable=["parser", "ner"])
 # troubleshooting question ("webhook NOT firing", "server DOWN"), so we keep them.
 KEEP_WORDS = {"not", "no", "never", "without", "down"}
 STOP_WORDS = nlp.Defaults.stop_words - KEEP_WORDS
-
+# Words whose lemma spaCy gets wrong (it treats "cors" as a plural and shortens it
+# to "cor"), so we keep them exactly as written.
+KEEP_AS_IS = {"cors", "https"}
 
 def clean_text(text: str) -> str:
     """Step 1 - Clean: lowercase and replace punctuation/special characters with spaces."""
@@ -32,18 +34,21 @@ def _keep(token) -> bool:
         return False
     return token.text not in STOP_WORDS and token.lemma_ not in STOP_WORDS
 
+def _normalize(token) -> str:
+    """Step 4 - Lemmatize: reduce a token to its base form (unless it is protected)."""
+    return token.text if token.text in KEEP_AS_IS else token.lemma_
 
 def preprocess(text: str) -> str:
     """Run the full pipeline on ONE text and return the tokens joined by spaces."""
     doc = nlp(clean_text(text))  # Step 2 - Tokenize (spaCy splits the text into tokens)
-    tokens = [t.lemma_ for t in doc if _keep(t)]  # Step 4 - Lemmatize
+    tokens = [_normalize(t) for t in doc if _keep(t)]  # Step 4 - Lemmatize
     return " ".join(tokens)
 
 
 def preprocess_many(texts) -> list[str]:
     """Same as preprocess(), but faster for many texts (e.g. all FAQ questions)."""
     cleaned = [clean_text(t) for t in texts]
-    return [" ".join(t.lemma_ for t in doc if _keep(t)) for doc in nlp.pipe(cleaned)]
+    return [" ".join(_normalize(t) for t in doc if _keep(t)) for doc in nlp.pipe(cleaned)]
 
 
 if __name__ == "__main__":
