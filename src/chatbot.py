@@ -20,7 +20,7 @@ class FAQChatbot:
             self.known_codes |= set(STATUS_CODE.findall(question))
 
     def get_response(self, user_text: str) -> dict:
-        """Return a dict: found, answer, category, source_url, score, suggestions."""
+        """Return a dict: found, faq_id, top_faq_ids, answer, category, source_url, score, suggestions."""
         user_text = user_text.strip()
         if not user_text:
             return self._reply(False, "Please type a question.", [], 0.0)
@@ -49,16 +49,16 @@ class FAQChatbot:
                 f"Sorry, I don't have an FAQ about status code {', '.join(sorted(codes))} yet. "
                 f"Codes I can help with: {', '.join(sorted(self.known_codes))}."
             )
-            return self._reply(False, message, [], best["score"])
+            return self._reply(False, message, [], best["score"], ranked=ranked)
 
         if code_hit or best["score"] >= config.THRESHOLD:
             related = self._suggest(ranked, start=1)
-            return self._reply(True, best["answer"], related, best["score"], best)
+            return self._reply(True, best["answer"], related, best["score"], best, ranked)
 
         # Not confident: say so and offer the closest questions instead.
         suggestions = self._suggest(ranked, start=0)
         message = config.FALLBACK_MESSAGE if suggestions else config.OUT_OF_SCOPE_MESSAGE
-        return self._reply(False, message, suggestions, best["score"])
+        return self._reply(False, message, suggestions, best["score"], ranked=ranked)
 
     def _suggest(self, ranked: list, start: int) -> list:
         """Main questions of the next closest FAQs, skipping very weak matches."""
@@ -70,9 +70,11 @@ class FAQChatbot:
         ]
 
     @staticmethod
-    def _reply(found, answer, suggestions, score, match=None) -> dict:
+    def _reply(found, answer, suggestions, score, match=None, ranked=None) -> dict:
         return {
             "found": found,
+            "faq_id": match["faq_id"] if match else None,
+            "top_faq_ids": [r["faq_id"] for r in (ranked or [])[:3]],
             "answer": answer,
             "category": match["category"] if match else None,
             "source_url": match["source_url"] if match else None,

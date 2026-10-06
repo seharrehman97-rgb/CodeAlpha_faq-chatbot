@@ -1,0 +1,81 @@
+question,expected,answered,got,top3,score,outcome
+"my request got a 401 response, what's wrong",f001,True,f001,"['f001', 'f023', 'f048']",0.37,correct
+access denied 403 even though I'm logged in,f002,True,f002,"['f002', 'f048', 'f052']",0.69,correct
+the endpoint says resource not found,f003,True,f003,"['f003', 'f065', 'f015']",0.67,correct
+what is the meaning of status 200,f004,True,f004,"['f004', 'f057', 'f005']",0.76,correct
+I sent a POST and the server replied created,f005,True,f017,"['f017', 'f005', 'f059']",0.42,wrong answer
+server answered successfully but with an empty body,f006,True,f051,"['f051', 'f064', 'f003']",0.9,wrong answer
+the server complains that my request is malformed,f007,True,f051,"['f051', 'f003', 'f053']",0.78,wrong answer
+using GET on a route that only accepts POST gives an error,f008,True,f025,"['f025', 'f005', 'f018']",0.58,wrong answer
+request has valid json but fails validation checks,f009,True,f009,"['f009', 'f002', 'f026']",0.38,correct
+the server crashed and returned an internal error,f010,True,f010,"['f010', 'f003', 'f051']",0.76,correct
+nginx reports an invalid response from upstream,f011,True,f011,"['f011', 'f025', 'f007']",0.5,correct
+upstream server took too long and the proxy gave up,f012,True,f033,"['f033', 'f012', 'f011']",0.33,wrong answer
+can you explain what a RESTful web service is,f013,True,f021,"['f021', 'f015', 'f013']",0.42,wrong answer
+when should I use PUT instead of PATCH,f014,True,f014,"['f014', 'f005', 'f047']",0.47,correct
+what is the url path an api listens on called,f015,True,f063,"['f063', 'f019', 'f016']",0.45,wrong answer
+difference between ?id=5 and /users/5,f016,True,f052,"['f052', 'f003', 'f064']",0.47,wrong answer
+how can I send json data to the server,f017,True,f017,"['f017', 'f035', 'f059']",0.64,correct
+does repeating the same request cause duplicate effects,f018,True,f026,"['f026', 'f039', 'f046']",0.43,wrong answer
+where do I put my API key when calling the service,f019,True,f019,"['f019', 'f049', 'f045']",0.69,correct
+how to pass a bearer token in the authorization header,f020,True,f020,"['f020', 'f050', 'f016']",0.62,correct
+"my jwt says expired, what now",f021,True,f021,"['f021', 'f022', 'f005']",0.89,correct
+when do I need a refresh token,f022,True,f022,"['f022', 'f018', 'f020']",0.74,correct
+same request works in postman but returns 401 from my script,f023,True,f023,"['f023', 'f001', 'f048']",0.67,correct
+what does the content type header tell the server,f024,True,f024,"['f024', 'f062', 'f027']",0.7,correct
+tell the server I want a JSON response,f025,True,f025,"['f025', 'f062', 'f006']",0.59,correct
+unexpected token error when parsing the response,f026,True,f026,"['f026', 'f025', 'f021']",0.81,correct
+server says unsupported media type,f027,True,f027,"['f027', 'f051', 'f024']",0.86,correct
+why can't my website call an API on another domain,f028,True,f064,"['f064', 'f019', 'f013']",0.62,wrong answer
+browser console says request blocked by CORS,f029,True,f028,"['f028', 'f029', 'f030']",0.9,wrong answer
+why does my browser send OPTIONS before the actual request,f030,True,f030,"['f030', 'f028', 'f060']",1.0,correct
+fetch works in curl but the browser refuses it,f031,True,f031,"['f031', 'f042', 'f029']",0.74,correct
+what is throttling in APIs,f032,True,f032,"['f032', 'f013', 'f018']",0.7,correct
+how long should I wait before trying again after being limited,f033,True,f033,"['f033', 'f012', 'f032']",0.71,correct
+retry delays that double each time,f034,True,f056,"['f056', 'f033', 'f034']",0.64,wrong answer
+how do I get the next page of results,f035,True,f035,"['f035', 'f008', 'f061']",0.88,correct
+difference between webhooks and polling,f036,True,f036,"['f036', 'f064', 'f048']",0.86,correct
+I'm not getting callbacks from stripe,f037,True,f037,"['f037', 'f062', 'f003']",0.76,correct
+how do I verify a webhook really came from the provider,f038,True,f039,"['f039', 'f038', 'f065']",0.57,wrong answer
+the same webhook event arrived twice,f039,True,f039,"['f039', 'f058', 'f037']",0.74,correct
+how do I receive webhooks on my laptop during development,f040,True,f037,"['f037', 'f036', 'f039']",0.68,wrong answer
+how to look at network requests in chrome devtools,f041,True,f041,"['f041', 'f064', 'f042']",0.52,correct
+send a post request from the command line with curl,f042,True,f042,"['f042', 'f017', 'f060']",0.59,correct
+what information should I record in logs for failed API calls,f043,True,f043,"['f043', 'f034', 'f062']",0.73,correct
+what does too many requests error mean,f044,True,f044,"['f044', 'f027', 'f007']",0.58,correct
+"service unavailable error, is the server down",f045,True,f045,"['f045', 'f058', 'f010']",0.67,correct
+got a conflict response when creating a duplicate user,f046,True,f046,"['f046', 'f005', 'f025']",0.43,correct
+why was my request redirected to a new url,f047,True,f047,"['f047', 'f063', 'f015']",0.76,correct
+is 403 about permissions and 401 about login,f048,True,f048,"['f048', 'f001', 'f002']",0.82,correct
+I pushed my secret key to github by mistake,f049,True,f049,"['f049', 'f019', 'f052']",0.73,correct
+username and password in an authorization header,f050,True,f050,"['f050', 'f020', 'f048']",0.7,correct
+the server receives my POST but the body is empty,f051,True,f051,"['f051', 'f017', 'f037']",0.61,correct
+why does github reject requests that have no user agent,f052,True,f052,"['f052', 'f049', 'f006']",0.64,correct
+how do I allow my frontend origin on the server,f053,True,f053,"['f053', 'f029', 'f051']",0.55,correct
+cors error when sending cookies with fetch,f054,True,f054,"['f054', 'f031', 'f029']",0.61,correct
+ways to stay under the API request quota,f055,True,f055,"['f055', 'f064', 'f047']",0.75,correct
+request timed out after 30 seconds,f056,True,f056,"['f056', 'f064', 'f042']",0.94,correct
+what response should my webhook handler send back,f057,True,f059,"['f059', 'f057', 'f025']",0.72,wrong answer
+what if the receiving server is offline when the webhook is sent,f058,True,f059,"['f059', 'f037', 'f036']",0.6,wrong answer
+how to capture and view webhook payloads online,f059,True,f059,"['f059', 'f017', 'f041']",0.43,correct
+how to call an API using postman,f060,True,f060,"['f060', 'f031', 'f023']",0.71,correct
+make my local server accessible from the internet,f061,True,f061,"['f061', 'f040', 'f051']",0.84,correct
+is the problem on the server or in my code,f062,True,f062,"['f062', 'f051', 'f003']",0.56,correct
+what does /v2/ in the url mean,f063,True,f065,"['f065', 'f063', 'f015']",0.47,wrong answer
+what does an http request consist of,f064,True,f064,"['f064', 'f014', 'f004']",1.0,correct
+webhook url gives 404 not found,f065,True,f065,"['f065', 'f003', 'f015']",0.8,correct
+what is the weather today,NONE,False,,"['f065', 'f064', 'f063']",0.0,correctly refused
+how do I bake a chocolate cake,NONE,False,,"['f065', 'f064', 'f063']",0.0,correctly refused
+who won the football match yesterday,NONE,False,,"['f065', 'f064', 'f063']",0.0,correctly refused
+tell me a joke,NONE,True,f062,"['f062', 'f061', 'f004']",0.53,answered out-of-scope question
+how do I learn to play guitar,NONE,False,,"['f065', 'f064', 'f063']",0.0,correctly refused
+what is the capital of France,NONE,False,,"['f065', 'f064', 'f063']",0.0,correctly refused
+best programming language for beginners,NONE,True,f034,"['f034', 'f004', 'f043']",0.52,answered out-of-scope question
+how do I center a div in CSS,NONE,False,,"['f065', 'f064', 'f063']",0.0,correctly refused
+how to install python on windows,NONE,True,f023,"['f023', 'f061', 'f004']",0.51,answered out-of-scope question
+what is machine learning,NONE,True,f040,"['f040', 'f008', 'f061']",0.6,answered out-of-scope question
+write me a poem about the sea,NONE,False,,"['f065', 'f064', 'f063']",0.0,correctly refused
+explain SQL joins,NONE,True,f015,"['f015', 'f013', 'f032']",0.72,answered out-of-scope question
+what does error 505 mean,NONE,False,,"['f027', 'f015', 'f001']",0.67,correctly refused
+what is status code 418,NONE,True,f057,"['f057', 'f006', 'f004']",0.73,answered out-of-scope question
+how do I reset my instagram password,NONE,True,f050,"['f050', 'f008', 'f061']",0.62,answered out-of-scope question
