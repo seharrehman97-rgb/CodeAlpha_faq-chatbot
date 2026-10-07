@@ -20,7 +20,11 @@ DEFAULTS = {
     "STRICT_CODES": False,
 }
 
-EXPERIMENTS = [
+# Round 1 tested each idea on its own. Round 2 (below) combines the ideas that helped
+# and tries milder strengths, because the margin rule was either too weak or too strict.
+ROUND = 2
+
+ROUND_1 = [
     ("0. Baseline (no changes)", {}),
     ("A. Extra stopwords", {"EXTRA_STOPWORDS": GENERIC_WORDS}),
     ("B. Word pairs (bigrams)", {"USE_BIGRAMS": True}),
@@ -33,6 +37,22 @@ EXPERIMENTS = [
     ("A+B+C+D1+E", {"EXTRA_STOPWORDS": GENERIC_WORDS, "USE_BIGRAMS": True,
                     "MIN_COVERAGE": 0.5, "MIN_MARGIN": 0.10, "STRICT_CODES": True}),
 ]
+
+ROUND_2 = [
+    ("0. Baseline (no changes)", {}),
+    ("C. Coverage 50%", {"MIN_COVERAGE": 0.5}),
+    ("C40. Coverage 40%", {"MIN_COVERAGE": 0.4}),
+    ("C60. Coverage 60%", {"MIN_COVERAGE": 0.6}),
+    ("C+E", {"MIN_COVERAGE": 0.5, "STRICT_CODES": True}),
+    ("C+E+D 0.05", {"MIN_COVERAGE": 0.5, "STRICT_CODES": True, "MIN_MARGIN": 0.05}),
+    ("C+E+D 0.10", {"MIN_COVERAGE": 0.5, "STRICT_CODES": True, "MIN_MARGIN": 0.10}),
+    ("C+E+D 0.15", {"MIN_COVERAGE": 0.5, "STRICT_CODES": True, "MIN_MARGIN": 0.15}),
+    ("A+C+E", {"EXTRA_STOPWORDS": GENERIC_WORDS, "MIN_COVERAGE": 0.5, "STRICT_CODES": True}),
+    ("A+C+E+D 0.05", {"EXTRA_STOPWORDS": GENERIC_WORDS, "MIN_COVERAGE": 0.5,
+                      "STRICT_CODES": True, "MIN_MARGIN": 0.05}),
+]
+
+EXPERIMENTS = ROUND_1 if ROUND == 1 else ROUND_2
 
 
 def apply_settings(overrides: dict) -> None:
@@ -59,8 +79,9 @@ def main():
     print(table.to_string())
     print(f"\nBest overall: {table['overall %'].idxmax()} ({table['overall %'].max()}%)")
     print(f"Fewest misleading answers: {table['misleading %'].idxmin()} ({table['misleading %'].min()}%)")
-    table.to_csv("docs/experiments.csv")
-    print("\nSaved docs/experiments.csv")
+    out_path = f"docs/experiments_round{ROUND}.csv"
+    table.to_csv(out_path)
+    print(f"\nSaved {out_path}")
 
 
 if __name__ == "__main__":
