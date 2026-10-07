@@ -34,11 +34,11 @@ USE_BIGRAMS = False
 
 # Share of the user's words that must exist in the FAQ vocabulary (0 = off).
 # Stops off-topic questions that contain only one familiar word.
-MIN_COVERAGE = 0.0
+MIN_COVERAGE = 0.6
 
 # The best FAQ must beat the second-best by at least this much (0 = off).
 # Stops the bot guessing when two FAQs look almost equally good.
-MIN_MARGIN = 0.0
+MIN_MARGIN = 0.05
 
 # True = refuse whenever the user types a status code that no FAQ covers.
-STRICT_CODES = False
+STRICT_CODES = True
