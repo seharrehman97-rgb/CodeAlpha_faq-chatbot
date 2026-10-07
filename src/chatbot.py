@@ -3,6 +3,7 @@ import re
 
 from src import config
 from src.matcher import FAQMatcher
+from src.smalltalk import small_talk_reply
 
 # Matches HTTP status codes such as 401, 404, 429, 502 (100-599).
 STATUS_CODE = re.compile(r"\b[1-5]\d{2}\b")
@@ -24,6 +25,11 @@ class FAQChatbot:
         user_text = user_text.strip()
         if not user_text:
             return self._reply(False, "Please type a question.", [], 0.0)
+
+        # Small talk ("hi", "thanks", "who are you") gets a canned reply, not an FAQ answer.
+        small_talk = small_talk_reply(user_text)
+        if small_talk:
+            return self._reply(False, small_talk, [], 0.0)
 
         ranked = self.matcher.top_matches(user_text, n=self.total_faqs)
 

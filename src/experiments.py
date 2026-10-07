@@ -22,7 +22,7 @@ DEFAULTS = {
 
 # Round 1 tested each idea on its own. Round 2 (below) combines the ideas that helped
 # and tries milder strengths, because the margin rule was either too weak or too strict.
-ROUND = 2
+ROUND = 3
 
 ROUND_1 = [
     ("0. Baseline (no changes)", {}),
@@ -52,7 +52,19 @@ ROUND_2 = [
                       "STRICT_CODES": True, "MIN_MARGIN": 0.05}),
 ]
 
-EXPERIMENTS = ROUND_1 if ROUND == 1 else ROUND_2
+# Round 3: off-topic questions with one or two familiar words still slip through,
+# so test a stricter coverage rule (60% and 70%) together with the other kept ideas.
+ROUND_3 = [
+    ("0. Baseline (no changes)", {}),
+    ("Current: C50+E+D 0.05", {"MIN_COVERAGE": 0.5, "STRICT_CODES": True, "MIN_MARGIN": 0.05}),
+    ("C60+E", {"MIN_COVERAGE": 0.6, "STRICT_CODES": True}),
+    ("C60+E+D 0.05", {"MIN_COVERAGE": 0.6, "STRICT_CODES": True, "MIN_MARGIN": 0.05}),
+    ("C70+E", {"MIN_COVERAGE": 0.7, "STRICT_CODES": True}),
+    ("C70+E+D 0.05", {"MIN_COVERAGE": 0.7, "STRICT_CODES": True, "MIN_MARGIN": 0.05}),
+    ("C80+E", {"MIN_COVERAGE": 0.8, "STRICT_CODES": True}),
+]
+
+EXPERIMENTS = {1: ROUND_1, 2: ROUND_2, 3: ROUND_3}[ROUND]
 
 
 def apply_settings(overrides: dict) -> None:
