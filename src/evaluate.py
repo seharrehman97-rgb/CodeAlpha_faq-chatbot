@@ -50,6 +50,8 @@ def summarize(results: pd.DataFrame) -> dict:
     in_labels = labels[in_scope.index]
     top3_hit = in_scope.apply(lambda r: r["expected"] in r["top3"], axis=1)
     refused_ok = (labels[out_scope.index] == "correctly refused").sum()
+    wrong_n = (in_labels == "wrong answer").sum()
+    oos_answered = len(out_scope) - refused_ok
     return {
         "correct": (in_labels == "correct").mean(),  # top-1 accuracy
         "top3": top3_hit.mean(),  # expected FAQ is among the 3 closest
@@ -57,6 +59,8 @@ def summarize(results: pd.DataFrame) -> dict:
         "missed": (in_labels == "refused (missed)").mean(),  # said "not sure" wrongly
         "oos_refused": refused_ok / len(out_scope),  # out-of-scope handled well
         "overall": ((in_labels == "correct").sum() + refused_ok) / len(results),
+        # How often the bot misled the user: a wrong answer, or an answer to an off-topic question.
+        "misled": (wrong_n + oos_answered) / len(results),
     }
 
 
@@ -81,6 +85,7 @@ def main():
     print(f"Missed (bot said 'not sure'):            {pct(s['missed'])}")
     print(f"Out-of-scope questions refused:          {pct(s['oos_refused'])}")
     print(f"Overall good outcomes:                   {pct(s['overall'])}")
+    print(f"Misleading answers (wrong + off-topic):  {pct(s['misled'])}")
 
     # 2. Failures, for error analysis
     failures = results[~results["outcome"].isin(["correct", "correctly refused"])]

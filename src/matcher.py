@@ -4,6 +4,7 @@ import pandas as pd
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
+from src import config
 from src.preprocess import preprocess, preprocess_many
 
 
@@ -14,7 +15,9 @@ class FAQMatcher:
         # Preprocess: clean every FAQ question with the same function used for user input.
         clean_questions = preprocess_many(self.df["question"])
         # Vectorize: learn the vocabulary from the FAQ questions and turn each one into numbers.
-        self.vectorizer = TfidfVectorizer()
+        # With bigrams on, two-word phrases (e.g. "bad gateway") count as features too.
+        ngrams = (1, 2) if config.USE_BIGRAMS else (1, 1)
+        self.vectorizer = TfidfVectorizer(ngram_range=ngrams)
         self.faq_matrix = self.vectorizer.fit_transform(clean_questions)
 
     def top_matches(self, user_question: str, n: int = 3) -> list[dict]:
@@ -45,6 +48,18 @@ class FAQMatcher:
                 }
             )
         return results
+
+    def coverage(self, user_question: str) -> float:
+        """Share of the user's words (after cleaning) that the FAQ data knows.
+
+        "tell me a joke" -> low (the FAQs do not know these words)
+        "webhook not firing" -> high
+        """
+        words = preprocess(user_question).split()
+        if not words:
+            return 0.0
+        known = sum(1 for w in words if w in self.vectorizer.vocabulary_)
+        return known / len(words)
 
     def leave_one_out_accuracy(self) -> float:
         """Rough self-test: hide each question and check whether its closest
