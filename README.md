@@ -109,8 +109,8 @@ Run `python -m src.explain "your question"` to see exactly why the bot matched (
 Requires **Python 3.12** (spaCy may not support the newest Python versions yet).
 
 ```bash
-git clone https://github.com/seharrehman97-rgb/faq-chatbot.git
-cd faq-chatbot
+git clone https://github.com/seharrehman97-rgb/CodeAlpha_faq-chatbot.git
+cd CodeAlpha_faq-chatbot
 
 # Windows
 py -3.12 -m venv venv
@@ -143,7 +143,7 @@ python -m src.explain "why is my webhook not firing"
 ## Project structure
 
 ```
-faq-chatbot/
+CodeAlpha_faq-chatbot/
 ├── app/app.py            # Streamlit chat interface (display only)
 ├── data/
 │   ├── faqs.csv          # 65 FAQs, 260 rows
