@@ -111,7 +111,7 @@ Run `python -m src.explain "your question"` to see exactly why the bot matched (
 Requires **Python 3.12** (spaCy may not support the newest Python versions yet).
 
 ```bash
-git clone https://github.com/TODO-your-username/faq-chatbot.git
+git clone https://github.com/seharrehman97-rgb/faq-chatbot.git
 cd faq-chatbot
 
 # Windows
@@ -204,4 +204,4 @@ FAQ answers are summarised from MDN Web Docs, Stripe, GitHub, AWS, and OWASP doc
 
 ## Author
 
-TODO-your-name. [GitHub profile](https://github.com/TODO-your-username)
+Sehar Rehman Gull. [GitHub profile](https://github.com/seharrehman97-rgb)
