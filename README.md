@@ -2,8 +2,6 @@
 
 An FAQ chatbot that helps developers debug common **REST API and webhook problems**: HTTP status codes, authentication, CORS, rate limits, webhooks, and debugging tools. Every answer links to official documentation.
 
-**Live demo:** TODO-add-your-Streamlit-link-here
-
 ![Chatbot answering a question](docs/demo-answer.png)
 
 > Built for **Task 2: Chatbot for FAQs** (NLP with spaCy, TF-IDF, and cosine similarity).
